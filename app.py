@@ -15,6 +15,17 @@ from langchain_core.runnables import RunnablePassthrough
 
 # Configuration - must match ingest_documents.py
 CHROMA_DIR = Path("./chroma_db")
+# 2. Trigger ingestion if the folder is missing
+if not os.path.exists(CHROMA_DIR):
+    st.warning("Vector database not found. Initializing indexing...")
+    try:
+        run_ingestion()
+        st.success("Database indexed successfully!")
+        # Optional: Force a rerun to refresh the state
+        st.rerun()
+    except Exception as e:
+        st.error(f"Error during ingestion: {e}")
+        st.stop() # Stop the app if it can't index
 COLLECTION_NAME = "support_docs"
 EMBEDDING_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
 LLM_MODEL = "gemma3:1b"  # use: ollama list to see installed models; ollama pull llama2 to add more
@@ -111,3 +122,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
