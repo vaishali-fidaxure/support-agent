@@ -4,7 +4,7 @@ Uses local embeddings (sentence-transformers) and Ollama for the LLM.
 """
 
 from pathlib import Path
-
+import os
 import streamlit as st
 from langchain_chroma import Chroma
 from langchain_core.prompts import ChatPromptTemplate
@@ -122,4 +122,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
