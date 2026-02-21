@@ -14,6 +14,14 @@ from langchain_ollama import ChatOllama
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnablePassthrough
 
+# 1. IMPORT FIRST
+# This tells Python: "When I say run_ingestion, I mean the main() function from ingest.py"
+try:
+    from ingest import main as run_ingestion
+except ImportError:
+    st.error("Could not find ingest.py! Make sure it is in your GitHub repository.")
+    st.stop()
+    
 # Configuration - must match ingest_documents.py
 CHROMA_DIR = Path("./chroma_db")
 # 2. Trigger ingestion if the folder is missing
@@ -123,6 +131,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
